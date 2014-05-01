@@ -1180,21 +1180,15 @@ public class DiscoveryClient implements LookupService {
      * @return - The zone in which the particular instance belongs to.
      */
     public static String getZone(InstanceInfo myInfo) {
-        String[] availZones = clientConfig.getAvailabilityZones(clientConfig
-                .getRegion());
-        String instanceZone = ((availZones == null || availZones.length == 0) ? "default"
-                : availZones[0]);
-        if (myInfo != null
-                && myInfo.getDataCenterInfo().getName() == Name.Amazon) {
-
+        if (myInfo != null && myInfo.getDataCenterInfo().getName() == Name.Amazon) {
             String awsInstanceZone = ((AmazonInfo) myInfo.getDataCenterInfo())
-            .get(MetaDataKey.availabilityZone);
+                    .get(MetaDataKey.availabilityZone);
             if (awsInstanceZone != null) {
-                instanceZone = awsInstanceZone;
+                return awsInstanceZone;
             }
-
         }
-        return instanceZone;
+        String[] availZones = clientConfig.getAvailabilityZones(clientConfig.getRegion());
+        return ((availZones == null || availZones.length == 0) ? "default" : availZones[0]);
     }
 
     /**
