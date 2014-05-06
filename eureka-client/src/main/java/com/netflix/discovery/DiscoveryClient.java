@@ -918,9 +918,9 @@ public class DiscoveryClient implements LookupService {
         try {
             // If the application is unknown do not register/renew/cancel but
             // refresh
-            if ((UNKNOWN.equals(instanceInfo.getAppName())
-                    && (!Action.Refresh.equals(action)) && (!Action.Refresh_Delta
-                    .equals(action)))) {
+            if (UNKNOWN.equalsIgnoreCase(instanceInfo.getAppName())
+                    && !Action.Refresh.equals(action)
+                    && !Action.Refresh_Delta.equals(action)) {
                 return null;
             }
             WebResource r = discoveryApacheClient.resource(serviceUrl);
