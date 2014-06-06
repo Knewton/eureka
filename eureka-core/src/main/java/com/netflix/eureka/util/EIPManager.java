@@ -100,7 +100,7 @@ public class EIPManager {
         .get(MetaDataKey.availabilityZone);
         String myPublicIP = ((AmazonInfo) myInfo.getDataCenterInfo())
         .get(MetaDataKey.publicIpv4);
-
+        logger.info("Public IP of this instance is: " + myPublicIP);
         Collection<String> candidateEIPs = getCandidateEIPs(myInstanceId,
                 myZone);
         for (String eipEntry : candidateEIPs) {

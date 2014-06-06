@@ -150,8 +150,10 @@ public class EurekaBootStrap implements ServletContextListener {
         EurekaInstanceConfig config;
         if (CLOUD.equals(ConfigurationManager.getDeploymentContext()
                 .getDeploymentDatacenter())) {
+            logger.info("Correctly using CloudInstanceConfig");
             config = new CloudInstanceConfig();
         } else {
+            logger.info("Incorrectly using MyDataCenterInstanceConfig");
             config = new MyDataCenterInstanceConfig();
         }
         logger.info("Initializing the eureka client...");
@@ -208,6 +210,7 @@ public class EurekaBootStrap implements ServletContextListener {
      */
     private void handleEIPBinding(PeerAwareInstanceRegistry registry)
     throws InterruptedException {
+        logger.info("Handling EIP binding.");
         EurekaServerConfig eurekaServerConfig = EurekaServerConfigurationManager.getInstance().getConfiguration();
         int retries = eurekaServerConfig.getEIPBindRebindRetries();
          // Bind to EIP if needed
@@ -215,8 +218,10 @@ public class EurekaBootStrap implements ServletContextListener {
         for (int i = 0; i < retries; i++) {
                try {
                     if (eipManager.isEIPBound()) {
+                        logger.info("EIP already bound!");
                         break;
                     } else {
+                        logger.info("Binding EIP!");
                         eipManager.bindEIP();
                     }
                 } catch (Throwable e) {

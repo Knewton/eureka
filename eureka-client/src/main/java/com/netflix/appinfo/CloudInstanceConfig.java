@@ -101,7 +101,7 @@ public class CloudInstanceConfig extends PropertiesInstanceConfig {
             // This might be a case of VPC where the instance id is not null, but
             // public hostname might be null
             amazonInfo.getMetadata().put(MetaDataKey.publicHostname.getName(),
-                    (amazonInfo.get(MetaDataKey.localIpv4)));
+                                         (amazonInfo.get(MetaDataKey.localIpv4)));
         }
         return info;
     }
